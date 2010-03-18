@@ -41,7 +41,7 @@ class PuG():
 	can execute pushs, pulls, adds, commits and so on. 
 	"""
 
-	def __init__(self, GIT_WORK_TREE='.', GIT_DIR='.git', stdin=None, stderr=None, stdout=None):
+	def __init__(self, cwd='.', GIT_WORK_TREE=None, GIT_DIR=None, stdin=None, stderr=None, stdout=None):
 		'''
 GIT_DIR = the git index folder, relative to the repositorydir (default = .git)
 GIT_WORK_TREE = the root git repostitory
@@ -50,8 +50,8 @@ GIT_WORK_TREE = the root git repostitory
 		self.GIT_WORK_TREE = GIT_WORK_TREE
 		self.stdin=stdin
 		self.stderr=stderr
-		self.stdout=subprocess2.PIPE
-		self.cwd = os.environ["HOME"]
+		self.stdout=stdout
+		self.cwd = cwd
 		self.lastoutput = ''
 
 	def getLastOutput(self):
@@ -60,8 +60,10 @@ GIT_WORK_TREE = the root git repostitory
 	def __getEnv(self):
 		'''Gets all the default environment variables and add some new'''
 		ret = os.environ
-		ret['GIT_DIR'] = self.GIT_DIR
-		ret['GIT_WORK_TREE'] = self.GIT_WORK_TREE
+		if self.GIT_DIR:
+			ret['GIT_DIR'] = self.GIT_DIR
+		if self.GIT_WORK_TREE:
+			ret['GIT_WORK_TREE'] = self.GIT_WORK_TREE
 		return ret
 
 	def execute(self, callcmd, stdin=None, stdout=None, stderr=None):
@@ -223,6 +225,7 @@ GIT_WORK_TREE = the root git repostitory
 
 
 	def get_submodules(self, stdin=None, stdout=None, stderr=None, include_dir = None):
+		'''returns an array of all the submodules'''
 		submodules = []
 		callcmd = []
 		callcmd.append(GIT)
@@ -241,3 +244,16 @@ GIT_WORK_TREE = the root git repostitory
 						if os.path.abspath(possible_module).startswith(os.path.abspath(inc)):
 							submodules.append(possible_module)
 		return submodules
+
+
+if __name__== '__main__':
+
+	git = PuG(stdout=sys.stdout)
+	print "executing git status"
+	git.status()
+
+	print "executing git status piped!"
+	git.status(stdout=subprocess2.PIPE)
+	print git.getLastOutput()
+
+
