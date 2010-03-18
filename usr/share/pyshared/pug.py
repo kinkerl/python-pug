@@ -3,18 +3,18 @@
 
 #License
 #=======
-#persy is free software: you can redistribute it and/or modify it
+#this is free software: you can redistribute it and/or modify it
 #under the terms of the GNU General Public License as published by the Free
 #Software Foundation, either version 2 of the License, or (at your option) any
 #later version.
 
-#persy is distributed in the hope that it will be useful,
+#this software is distributed in the hope that it will be useful,
 #but WITHOUT ANY WARRANTY; without even the implied warranty of
 #MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #General Public License for more details.
 
 #You should have received a copy of the GNU General Public License
-#along with persy; if not, write to the Free Software
+#along with this software; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 try:
 	import sys
@@ -53,9 +53,6 @@ GIT_WORK_TREE = the root git repostitory
 		self.stdout=stdout
 		self.cwd = cwd
 		self.lastoutput = ''
-
-	def getLastOutput(self):
-		return self.lastoutput
 
 	def __getEnv(self):
 		'''Gets all the default environment variables and add some new'''
@@ -244,6 +241,10 @@ GIT_WORK_TREE = the root git repostitory
 						if os.path.abspath(possible_module).startswith(os.path.abspath(inc)):
 							submodules.append(possible_module)
 		return submodules
+
+	def getLastOutput(self):
+		'''returns the output of the last executed command if stdout was set to subprocess2.PIPE'''
+		return self.lastoutput
 
 
 if __name__== '__main__':
