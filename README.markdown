@@ -1,5 +1,5 @@
 pug - persy's uncomplicated git
---------------------------------
+================================
 this is a git wrapper for python. 
 it just wrapps the system calls in a nice class. 
 i still need help with the packaging as deb and rpm (and egg?!?!). 
@@ -11,5 +11,5 @@ take a look at the stdout, stdin and stderr parameters of the class and the func
 
 
 todo
-================================
+--------------------------------
  *   use the timeout functions from subprocess 2
