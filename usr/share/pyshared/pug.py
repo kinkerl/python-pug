@@ -257,4 +257,3 @@ if __name__== '__main__':
 	git.status(stdout=subprocess2.PIPE)
 	print git.getLastOutput()
 
-
